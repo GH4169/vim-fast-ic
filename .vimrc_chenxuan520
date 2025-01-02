@@ -11,7 +11,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " base config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader = " "      " use ',' as leader
+let mapleader = ","      " use ',' as leader
 set nocompatible         " set not compatible with vi
 filetype on              " set file type detection
 filetype plugin on       " set load plugin by file type
@@ -26,15 +26,16 @@ set textwidth=0          " close auto enter
 set ruler                " cursor position displayed
 set laststatus=2         " show status
 set number               " show line number
-" set relativenumber       " show relativenumber
+set relativenumber       " show relativenumber
 set cursorline           " highlight current line
-" set whichwrap+=<,>,h,l   " set the cursor key across rows
+set whichwrap+=<,>,h,l   " set the cursor key across rows
 set ttimeoutlen=0        " set <ESC> response time
 set virtualedit=block,onemore   " allows the cursor appear after last character
 set noshowmode           " disable bottom mode displayed 'insert'
 set hidden               " allows toggle buffers in unsaved
 set matchpairs+=<:>      " make % can jump <>
 set background=dark      " set background color
+" set jumpoptions=stack    " set jump to stack instead of list
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code indent and typesetting config
@@ -49,10 +50,10 @@ set tabstop=4            " number of spaces used by tabs when editing
 set shiftwidth=4         " number of spaces tab occupies when formatting
 set softtabstop=4        " set 4 spaces as tabs
 set smarttab             " use tabs at the beginning of lines and segments
-set wrap               " disable divide a line to two
+set nowrap               " disable divide a line to two
 set backspace=2          " use enter key to normally handle input, eol, start, etc
 set sidescroll=10        " sets the number of characters to scroll to the right
-" set nofoldenable         " disables folding code
+set nofoldenable         " disables folding code
 set list lcs=tab:¦\      " default show indent line
 set sidescroll=0         " set move line when cursor too right
 set sidescrolloff=4      " set curor line to right
@@ -89,19 +90,19 @@ set helplang=cn          " set helplang Chinese
 set termencoding=utf-8   " set term encode
 set encoding=utf8        " set encode
 set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030 " set detect encode of file
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gvim/macvim config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
-	set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 20    " set fonts in gvim
+	set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 14      " set fonts in gvim
 	set guioptions-=m           " hide the menu bar
 	set guioptions-=T           " hide tool bar
 	set guioptions-=L           " hide left scroll bar
 	set guioptions-=r           " hide right scroll bar
 	set guioptions-=b           " hide bottom scroll bar
 	set showtabline=0           " hide tab bar
-	set lines=999 columns=999
-"	set guicursor=n-v-c:ver5    " set cursor to a vertical line
+	set guicursor=n-v-c:ver5    " set cursor to a vertical line
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -122,7 +123,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " find anything
 Plug 'Yggdroot/LeaderF', {'do':'./install.sh','tag':'v1.24'}
 " quick move mouse
-" Plug 'easymotion/vim-easymotion',{'on':['<Plug>(easymotion-s)','<Plug>(easymotion-bd-w)']}
+Plug 'easymotion/vim-easymotion',{'on':['<Plug>(easymotion-s)','<Plug>(easymotion-bd-w)']}
 " pair auto
 Plug 'jiangmiao/auto-pairs'
 " file tree left
@@ -135,7 +136,7 @@ Plug 'tpope/vim-repeat'
 " quick add comment
 Plug 'tpope/vim-commentary'
 " add endif when enter if
-Plug 'tpope/vim-endwise', {'for':['vim','sh']}
+Plug 'tpope/vim-endwise', {'for':['vim','sh','cpp','c']}
 " for cpp highlight
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
 " for go highlight
@@ -382,25 +383,25 @@ endfunc
 nnoremap <silent><space>E :call <sid>ShellOpenFile("OPEN_FILE")<cr>:call term_start("lf <c-r>=getenv('HOME')<cr>",{"close_cb":"<sid>ShellOpenFile","curwin":1})<cr>
 nnoremap <silent><space>e :call <sid>ShellOpenFile("OPEN_FILE")<cr>:call term_start("lf",{"close_cb":"<sid>ShellOpenFile","curwin":1})<cr>
 
-" " fzf self defile
-" func! s:FzfFind(command)
-" 	vert call term_start('bash',{'term_finish':"close"})
-" 	call term_sendkeys(term_list()[0],a:command."\<cr>")
-" endfunc
-" let g:fzf_temp_file=""
-" func! Tapi_Fzf(bufnum,arglist)
-" 	wincmd p|let temp=getenv("FZF_VIM")
-" 	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")|endif
-" 	if temp!=v:null
-" 		for line in readfile(g:fzf_temp_file)
-" 			let list=matchstr(line,"\/\^.*")
-" 			if a:arglist[0]=="0"|let @/="\\V\\^".line."\\$"|else|let @/="\\V".escape(strpart(list,1,len(list)-2),"^$")|endif
-" 			call feedkeys('n','in')|set hlsearch
-" 		endfor
-" 	endif
-" endfunc
-" nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
-" nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
+" fzf self defile
+func! s:FzfFind(command)
+	vert call term_start('bash',{'term_finish':"close"})
+	call term_sendkeys(term_list()[0],a:command."\<cr>")
+endfunc
+let g:fzf_temp_file=""
+func! Tapi_Fzf(bufnum,arglist)
+	wincmd p|let temp=getenv("FZF_VIM")
+	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")|endif
+	if temp!=v:null
+		for line in readfile(g:fzf_temp_file)
+			let list=matchstr(line,"\/\^.*")
+			if a:arglist[0]=="0"|let @/="\\V\\^".line."\\$"|else|let @/="\\V".escape(strpart(list,1,len(list)-2),"^$")|endif
+			call feedkeys('n','in')|set hlsearch
+		endfor
+	endif
+endfunc
+nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
+nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 
 " yank and paste
 nnoremap <leader>p "0p
@@ -485,8 +486,8 @@ func! MouseConfig()
 	nnoremenu PopUp.Back\ Pos <c-o>zz
 	nnoremenu PopUp.Next\ Pos <c-i>zz
 	" fold
-	" nnoremenu PopUp.Open\ Fold  zO
-	" nnoremenu PopUp.Close\ Fold zC
+	nnoremenu PopUp.Open\ Fold  zO
+	nnoremenu PopUp.Close\ Fold zC
 	" close
 	nnoremenu PopUp.-Sep- :<cr>
 	nnoremenu PopUp.Close\ Mouse :set mouse=""<cr>
@@ -520,11 +521,11 @@ nnoremap <silent><nowait>=N :setlocal norelativenumber<cr>:setlocal nonumber<cr>
 nnoremap <silent><nowait>\N :setlocal relativenumber<cr>:setlocal number<cr>:set list lcs=tab:¦\<space> <cr>
 
 " set fold auto,use zE unset all fold,zf create fold
-" nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
-" nnoremap <silent><nowait>\z :setlocal fdm=manual<cr>:setlocal nofen<cr>
-" nnoremap <silent><nowait>=o zO
-" nnoremap <silent><nowait>\o zC
-" nnoremap <silent><nowait><expr><bs> foldlevel('.')>0?"zc":"\<bs>"
+nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
+nnoremap <silent><nowait>\z :setlocal fdm=manual<cr>:setlocal nofen<cr>
+nnoremap <silent><nowait>=o zO
+nnoremap <silent><nowait>\o zC
+nnoremap <silent><nowait><expr><bs> foldlevel('.')>0?"zc":"\<bs>"
 
 " tab ctrl
 nnoremap <silent><nowait>=t :tabnew<cr>
@@ -573,7 +574,7 @@ xnoremap @ :normal @
 nnoremap <silent><c-q> @@
 
 " md fold enable
-" let g:markdown_fold_enable=1
+let g:markdown_fold_enable=1
 
 " termtask project config
 command! -nargs=? -complete=customlist,termtask#Term_task_list TaskRun  :call termtask#Term_task_run(<q-args>)
@@ -792,10 +793,10 @@ nnoremap <silent><nowait>U :call append(line('.')-1,"")<cr>
 nnoremap <silent><nowait>M :call append(line('.'),"")<cr>
 
 " make move easy
-" nnoremap <silent><c-e> $
-" vnoremap <silent><c-e> $
-" nnoremap <silent><expr><c-a> getline('.')[col('.')-1]>='0'&&getline('.')[col('.')-1]<='9'?"\<c-a>":"^"
-" vnoremap <silent><expr><c-a> mode()==#'v'&&line('.')==line('v')?"^":"\<c-a>"
+nnoremap <silent><c-e> $
+vnoremap <silent><c-e> $
+nnoremap <silent><expr><c-a> getline('.')[col('.')-1]>='0'&&getline('.')[col('.')-1]<='9'?"\<c-a>":"^"
+vnoremap <silent><expr><c-a> mode()==#'v'&&line('.')==line('v')?"^":"\<c-a>"
 
 " enhance c-a and c-x
 nnoremap <silent><expr>g<c-a> getline('.')[col('.')-1]=='9'?"r0":"r".(getline('.')[col('.')-1]+1)
@@ -916,7 +917,7 @@ let g:NERDTreeHighlightFolders = 1
 let g:NERDTreeHighlightFoldersFullName = 1
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
-let g:NERDTreeWinSize=30
+let g:NERDTreeWinSize=18
 " exit vim if NERDTree is the only window remaining in the only tab.
 augroup NerdTree
 	autocmd!
@@ -1006,9 +1007,9 @@ function! s:CocMouse()
 	nmenu     <silent>PopUp.Hight\ Word    *
 	nnoremenu <silent>PopUp.Back\ Pos      <c-o>zz
 	nnoremenu <silent>PopUp.Next\ Pos      <c-i>zz
-	" nnoremenu <silent>PopUp.Open\ Fold     zO
-	" nnoremenu <silent>PopUp.Close\ Fold    zC
-	" nnoremenu <silent>PopUp.Fold\ Enable   :setlocal fdm=indent<cr>:setlocal fen<cr>
+	nnoremenu <silent>PopUp.Open\ Fold     zO
+	nnoremenu <silent>PopUp.Close\ Fold    zC
+	nnoremenu <silent>PopUp.Fold\ Enable   :setlocal fdm=indent<cr>:setlocal fen<cr>
 	nnoremenu <silent>PopUp.-Sep-          :<cr>
 	nnoremenu <silent>PopUp.Close\ Model\  :let g:coc_popup_flag=0<cr>
 endfunction
@@ -1042,12 +1043,12 @@ let g:AutoPairsMapSpace = 0
 let g:dashboard_disable_statusline=1
 " let g:dashboard_icon_disable=1
 
-" " vim-easymotion
-" let g:EasyMotion_smartcase = 1
-" map  <leader>w <Plug>(easymotion-bd-w)
-" map  <leader>f <Plug>(easymotion-s)
-" nmap <silent>s <Plug>(easymotion-s)
-" imap <silent><c-s> <c-o>s
+" vim-easymotion
+let g:EasyMotion_smartcase = 1
+map  <leader>w <Plug>(easymotion-bd-w)
+map  <leader>f <Plug>(easymotion-s)
+nmap <silent>s <Plug>(easymotion-s)
+imap <silent><c-s> <c-o>s
 
 " python-highlight
 let g:python_highlight_all = 1
@@ -1079,7 +1080,7 @@ nnoremap <space>F :LeaderfMru<cr>
 " find buffer
 nnoremap <leader>b :LeaderfBuffer<cr>
 nnoremap <space>b :LeaderfBuffer<cr>
-" function list 
+" function list
 nnoremap <space>t :LeaderfFunction<cr>
 nnoremap <space>T :LeaderfFunctionAll<cr>
 xnoremap <space>t :<c-u>execute ":Leaderf function --all --input " . <sid>GetSelectArea()<cr>
@@ -1170,34 +1171,3 @@ let g:vim_ai_name="xinhuo"
 cab aic AIChat
 cab aie AIEdit
 cab ai  AI
-
-nnoremap <leader>so :source ~/.vimrc<CR>
-nnoremap <F2> :tabnew ~/.vimrc<CR>
-nnoremap <F3> :tabnew ~/.bashrc<CR>
-
-nnoremap <C-n> :tabnew<CR>
-nnoremap <TAB> :tabp<CR>
-cnoremap qc     tabclose
-unmap s
-" unmap a
-nnoremap <CR> viw
-vnoremap <CR> <ESC>
-" vnoremap y "+y
-" nnoremap y "+y
-" vnoremap x "+x
-" nnoremap x "+x
-
-" nnoremap p "+p
-" vnoremap p "+p
-" nnoremap dd "+dd
-set clipboard=unnamedplus
-
-nmap cm gcc
-vmap cm gcc
-nmap cu gcc
-vmap cu gcc
-
-set tags+=/home/zhou/project/ics2024/nemu/tags
-
-set foldmethod=marker
-nnoremap zo za
