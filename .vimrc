@@ -45,9 +45,9 @@ set cinoptions=g0,:0,N-s,(0    " set c/cpp indent way
 set smartindent          " smart choose indent way
 filetype indent on       " intelligent indent for different languages
 set noexpandtab          " set forbidden space to replace tab
-set tabstop=4            " number of spaces used by tabs when editing
-set shiftwidth=4         " number of spaces tab occupies when formatting
-set softtabstop=4        " set 4 spaces as tabs
+set tabstop=2            " number of spaces used by tabs when editing
+set shiftwidth=2         " number of spaces tab occupies when formatting
+set softtabstop=2        " set 4 spaces as tabs
 set smarttab             " use tabs at the beginning of lines and segments
 set wrap               " disable divide a line to two
 set backspace=2          " use enter key to normally handle input, eol, start, etc
@@ -118,7 +118,7 @@ Plug 'chenxuan520/my-vim-dashboard'
 " function list
 Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
 " auto complete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " find anything
 Plug 'Yggdroot/LeaderF', {'do':'./install.sh','tag':'v1.24'}
 " quick move mouse
@@ -933,91 +933,91 @@ augroup END
 " inoremap <expr><right> pumvisible() ? "\<c-y>" : "\<right>"
 " inoremap <expr><c-p>   pumvisible() ? "\<c-p>" : "\<c-[>"
 
-" for coc 0.0.82
-let g:coc_disable_startup_warning = 1
-inoremap <silent><expr> <TAB>
-			\ coc#pum#visible() ? coc#pum#next(1):
-			\ CheckBackspace() ? "\<TAB>" :
-			\ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-inoremap <silent><expr><right> coc#pum#visible() ? coc#pum#confirm() : "\<right>"
-inoremap <silent><expr><c-p> coc#pum#visible() ? coc#pum#prev(1) : "\<c-[>"
-
-function! CheckBackspace() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-" coc find define
-nmap <leader>u <Plug>(coc-definition)
-nmap <leader>U <Plug>(coc-type-definition)
-nmap <silent>gd <Plug>(coc-definition)
-nmap <silent>gD <Plug>(coc-type-definition)
-nmap <silent>gr <Plug>(coc-references)
-nmap <silent>gi <Plug>(coc-implementation)
-" coc refactor code
-nmap <space>r <Plug>(coc-refactor)
-nmap <leader>r <Plug>(coc-rename)
-" coc find wrong
-nmap <silent><F3> <Plug>(coc-diagnostic-prev)
-nmap <silent><F4> <Plug>(coc-diagnostic-next)
-nmap <silent>[w <Plug>(coc-diagnostic-prev)
-nmap <silent>]w <Plug>(coc-diagnostic-next)
-nmap <silent>-w <Plug>(coc-fix-current)
-nnoremap <silent><nowait>=w :<C-u>CocList --normal diagnostics<cr>
-nnoremap <silent><nowait><space>w :<C-u>CocList --normal diagnostics<cr>
-" coc text obj
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-" coc code action
-nmap <leader>a  <Plug>(coc-codeaction)
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>l  <Plug>(coc-codelens-action)
-" coc select range
-nmap <silent><leader>s <Plug>(coc-range-select)
-xmap <silent><leader>s <Plug>(coc-range-select)
-" coc format
-command! -nargs=0 Format :call CocActionAsync('format')
-command! -nargs=0 Import :call CocActionAsync('runCommand', 'editor.action.organizeImport')
-nmap <leader><leader>f :Format<cr>
-" coc config
-nmap <silent><nowait><space><space>c :CocConfig<cr>
-nmap <silent><nowait><space><space>l :CocList --normal extensions<cr>
-nmap <silent><nowait><space><space>j :CocList outline<cr>
-" coc currnt tag
-nnoremap <silent><nowait><space><space>k :echo CocAction('getCurrentFunctionSymbol')<cr>
-" coc help
-nnoremap <silent> K  :call ShowDocumentation()<cr>
-nnoremap <silent> gh :call ShowDocumentation()<cr>
-" coc mouse
-nmap <c-LeftMouse> <LeftMouse><Plug>(coc-definition)
-nmap <c-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
-let g:coc_popup_flag=0
-function! s:CocMouse()
-	unmenu PopUp
-	nmenu     <silent>PopUp.Coc\ Define    gd
-	nmenu     <silent>PopUp.Coc\ Refer     gr
-	nnoremenu <silent>PopUp.Coc\ Doc       :call ShowDocumentation()<cr>
-	nmenu     <silent>PopUp.Hight\ Word    *
-	nnoremenu <silent>PopUp.Back\ Pos      <c-o>zz
-	nnoremenu <silent>PopUp.Next\ Pos      <c-i>zz
-	" nnoremenu <silent>PopUp.Open\ Fold     zO
-	" nnoremenu <silent>PopUp.Close\ Fold    zC
-	" nnoremenu <silent>PopUp.Fold\ Enable   :setlocal fdm=indent<cr>:setlocal fen<cr>
-	nnoremenu <silent>PopUp.-Sep-          :<cr>
-	nnoremenu <silent>PopUp.Close\ Model\  :let g:coc_popup_flag=0<cr>
-endfunction
-nnoremap <silent><nowait>-c :let g:coc_popup_flag=1<cr>
-function! ShowDocumentation()
-	if CocAction('hasProvider', 'hover')|call CocActionAsync('doHover')
-	else|call feedkeys('K', 'in')
-	endif
-endfunction
+"" for coc 0.0.82
+"let g:coc_disable_startup_warning = 1
+"inoremap <silent><expr> <TAB>
+"			\ coc#pum#visible() ? coc#pum#next(1):
+"			\ CheckBackspace() ? "\<TAB>" :
+"			\ coc#refresh()
+"inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+"inoremap <silent><expr><right> coc#pum#visible() ? coc#pum#confirm() : "\<right>"
+"inoremap <silent><expr><c-p> coc#pum#visible() ? coc#pum#prev(1) : "\<c-[>"
+"
+"function! CheckBackspace() abort
+"	let col = col('.') - 1
+"	return !col || getline('.')[col - 1]  =~# '\s'
+"endfunction
+"" coc find define
+"nmap <leader>u <Plug>(coc-definition)
+"nmap <leader>U <Plug>(coc-type-definition)
+"nmap <silent>gd <Plug>(coc-definition)
+"nmap <silent>gD <Plug>(coc-type-definition)
+"nmap <silent>gr <Plug>(coc-references)
+"nmap <silent>gi <Plug>(coc-implementation)
+"" coc refactor code
+"nmap <space>r <Plug>(coc-refactor)
+"nmap <leader>r <Plug>(coc-rename)
+"" coc find wrong
+"nmap <silent><F3> <Plug>(coc-diagnostic-prev)
+"nmap <silent><F4> <Plug>(coc-diagnostic-next)
+"nmap <silent>[w <Plug>(coc-diagnostic-prev)
+"nmap <silent>]w <Plug>(coc-diagnostic-next)
+"nmap <silent>-w <Plug>(coc-fix-current)
+"nnoremap <silent><nowait>=w :<C-u>CocList --normal diagnostics<cr>
+"nnoremap <silent><nowait><space>w :<C-u>CocList --normal diagnostics<cr>
+"" coc text obj
+"xmap if <Plug>(coc-funcobj-i)
+"omap if <Plug>(coc-funcobj-i)
+"xmap af <Plug>(coc-funcobj-a)
+"omap af <Plug>(coc-funcobj-a)
+"xmap ic <Plug>(coc-classobj-i)
+"omap ic <Plug>(coc-classobj-i)
+"xmap ac <Plug>(coc-classobj-a)
+"omap ac <Plug>(coc-classobj-a)
+"" coc code action
+"nmap <leader>a  <Plug>(coc-codeaction)
+"xmap <leader>a  <Plug>(coc-codeaction-selected)
+"nmap <leader>l  <Plug>(coc-codelens-action)
+"" coc select range
+"nmap <silent><leader>s <Plug>(coc-range-select)
+"xmap <silent><leader>s <Plug>(coc-range-select)
+"" coc format
+"command! -nargs=0 Format :call CocActionAsync('format')
+"command! -nargs=0 Import :call CocActionAsync('runCommand', 'editor.action.organizeImport')
+"nmap <leader><leader>f :Format<cr>
+"" coc config
+"nmap <silent><nowait><space><space>c :CocConfig<cr>
+"nmap <silent><nowait><space><space>l :CocList --normal extensions<cr>
+"nmap <silent><nowait><space><space>j :CocList outline<cr>
+"" coc currnt tag
+"nnoremap <silent><nowait><space><space>k :echo CocAction('getCurrentFunctionSymbol')<cr>
+"" coc help
+"nnoremap <silent> K  :call ShowDocumentation()<cr>
+"nnoremap <silent> gh :call ShowDocumentation()<cr>
+"" coc mouse
+"nmap <c-LeftMouse> <LeftMouse><Plug>(coc-definition)
+"nmap <c-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
+"let g:coc_popup_flag=0
+"function! s:CocMouse()
+"	unmenu PopUp
+"	nmenu     <silent>PopUp.Coc\ Define    gd
+"	nmenu     <silent>PopUp.Coc\ Refer     gr
+"	nnoremenu <silent>PopUp.Coc\ Doc       :call ShowDocumentation()<cr>
+"	nmenu     <silent>PopUp.Hight\ Word    *
+"	nnoremenu <silent>PopUp.Back\ Pos      <c-o>zz
+"	nnoremenu <silent>PopUp.Next\ Pos      <c-i>zz
+"	" nnoremenu <silent>PopUp.Open\ Fold     zO
+"	" nnoremenu <silent>PopUp.Close\ Fold    zC
+"	" nnoremenu <silent>PopUp.Fold\ Enable   :setlocal fdm=indent<cr>:setlocal fen<cr>
+"	nnoremenu <silent>PopUp.-Sep-          :<cr>
+"	nnoremenu <silent>PopUp.Close\ Model\  :let g:coc_popup_flag=0<cr>
+"endfunction
+"nnoremap <silent><nowait>-c :let g:coc_popup_flag=1<cr>
+"function! ShowDocumentation()
+"	if CocAction('hasProvider', 'hover')|call CocActionAsync('doHover')
+"	else|call feedkeys('K', 'in')
+"	endif
+"endfunction
 
 " vista and tagbar
 nnoremap <silent> <leader>t :Vista!!<cr>
@@ -1201,3 +1201,5 @@ set tags+=/home/zhou/project/ics2024/nemu/tags
 
 set foldmethod=marker
 nnoremap zo za
+set vb t_vb=
+au GuiEnter * set t_vb=
