@@ -93,7 +93,7 @@ set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030 " set detect encode of f
 " gvim/macvim config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
-	set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 20    " set fonts in gvim
+	set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 17    " set fonts in gvim
 	set guioptions-=m           " hide the menu bar
 	set guioptions-=T           " hide tool bar
 	set guioptions-=L           " hide left scroll bar
@@ -775,7 +775,7 @@ nnoremap <silent><nowait>_ :vsp<cr>:bn<cr>
 nnoremap <silent><nowait>+ :sp<cr>:bn<cr>
 
 " edit file
-nnoremap e         :edit<space><c-r>=getcwd()<cr>/
+" nnoremap e         :edit<space><c-r>=getcwd()<cr>/
 nnoremap E         :edit<space><c-r>=expand('%:p:h')<cr>/
 nnoremap <leader>e :edit<space>~/
 
@@ -1203,3 +1203,8 @@ set foldmethod=marker
 nnoremap zo za
 set vb t_vb=
 au GuiEnter * set t_vb=
+
+if exists(":Tabularize")
+  nmap <Leader>ga :Tabularize /
+  vmap <Leader>ga :Tabularize /
+endif
