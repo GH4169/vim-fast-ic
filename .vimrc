@@ -44,7 +44,8 @@ set cindent              " set indent by c/cpp
 set cinoptions=g0,:0,N-s,(0    " set c/cpp indent way
 set smartindent          " smart choose indent way
 filetype indent on       " intelligent indent for different languages
-set noexpandtab          " set forbidden space to replace tab
+" set noexpandtab          " set forbidden space to replace tab
+set expandtab          " set forbidden space to replace tab
 set tabstop=2            " number of spaces used by tabs when editing
 set shiftwidth=2         " number of spaces tab occupies when formatting
 set softtabstop=2        " set 4 spaces as tabs
@@ -724,10 +725,12 @@ cnoremap <c-b> <s-left>
 cnoremap <c-f> <s-right>
 
 " cmd pair
-let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>','`':'`',}
+" let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>','`':'`',}
+let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>',}
 func! s:Judge(ch,mode)
 	if a:mode!='c'|let ch=getline('.')[col('.')-1]|else|let ch=getcmdline()[getcmdpos()-1]|endif
-	if a:ch=='"'||a:ch=="'"||a:ch=='`'|if ch!=a:ch|return a:ch.a:ch."\<left>"|endif|endif
+	" if a:ch=='"'||a:ch=="'"||a:ch=='`'|if ch!=a:ch|return a:ch.a:ch."\<left>"|endif|endif
+	if a:ch=='"'||a:ch=="'"|if ch!=a:ch|return a:ch.a:ch."\<left>"|endif|endif
 	if ch==a:ch|return "\<right>"|endif
 	return a:ch
 endfunc
@@ -743,7 +746,7 @@ cnoremap ( ()<left>
 cnoremap [ []<left>
 cnoremap { {}<left>
 cnoremap <expr>"    <sid>Judge('"','c')
-cnoremap <expr>`    <sid>Judge('`','c')
+" cnoremap <expr>`    <sid>Judge('`','c')
 cnoremap <expr>'    <sid>Judge("'",'c')
 cnoremap <expr>>    <sid>Judge('>','c')
 cnoremap <expr>)    <sid>Judge(')','c')
@@ -1208,3 +1211,5 @@ if exists(":Tabularize")
   nmap <Leader>ga :Tabularize /
   vmap <Leader>ga :Tabularize /
 endif
+
+au Filetype systemverilog let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '```':'```', '"""':'"""', "'''":"'''"}
