@@ -4,4 +4,4 @@
     finish " Give up here; the Tabular plugin musn't have been loaded
   endif
 
-AddTabularPattern = /\(=\|?=\|+=\|:=\)
+AddTabularPattern = /\(=\|?=\|+=\|:=\) /l1r1
