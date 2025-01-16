@@ -50,7 +50,7 @@ set tabstop=2            " number of spaces used by tabs when editing
 set shiftwidth=2         " number of spaces tab occupies when formatting
 set softtabstop=2        " set 4 spaces as tabs
 set smarttab             " use tabs at the beginning of lines and segments
-set wrap               " disable divide a line to two
+set nowrap               " disable divide a line to two
 set backspace=2          " use enter key to normally handle input, eol, start, etc
 set sidescroll=10        " sets the number of characters to scroll to the right
 " set nofoldenable         " disables folding code
